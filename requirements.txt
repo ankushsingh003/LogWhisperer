@@ -4,3 +4,5 @@ torch
 transformers
 numpy
 scikit-learn
+torch-geometric
+networkx
