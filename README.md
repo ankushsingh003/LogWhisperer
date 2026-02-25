@@ -8,7 +8,7 @@ LogWhisperer is a state-of-the-art Automated Root Cause Analysis (RCA) system de
 
 ## 🛠️ The Pipeline Workflow
 
-The LogWhisperer engine follows a rigorous 10-step process from raw telemetry to actionable insights.
+The LogWhisperer engine follows a rigorous 12-step process from raw telemetry to automated remediation.
 
 ```mermaid
 graph TD
@@ -30,13 +30,16 @@ graph TD
         S6 --> S8
     end
 
-    subgraph "Phase 4: Real-time Insights"
+    subgraph "Phase 4: Real-time Insights & Action"
         S8 --> S9[Step 9: Real-time Inference]
         S9 --> S10[Step 10: XAI Explainer]
+        S10 --> S11[Step 11: Remediation Engine]
+        S11 --> S12[Step 12: Notification Hub]
     end
 
     style S6 fill:#f96,stroke:#333,stroke-width:4px
-    style S10 fill:#bbf,stroke:#333,stroke-width:2px
+    style S11 fill:#f55,stroke:#333,stroke-width:2px
+    style S12 fill:#5fb,stroke:#333,stroke-width:2px
 ```
 
 ---
@@ -47,7 +50,8 @@ graph TD
 - **🧠 GNN-Powered Brain**: Utilizes Graph Attention Networks (GAT) to model complex dependencies and cascading failures.
 - **⚡ Real-time Detection**: Parallel processing of telemetry streams for near-instant RCA.
 - **🔍 Explainable AI (XAI)**: Don't just get a result; understand the *why* with human-readable explanations.
-- **🔬 Chaos-Ready**: Built-in fault injection simulation for robust model training.
+- **🛠️ Automated Remediation**: Suggests (and can execute) `kubectl` commands to fix the root cause.
+- **📢 Multi-Channel Alerting**: Built-in Slack/Webhook notification engine for incident response.
 
 ---
 
@@ -65,13 +69,15 @@ graph TD
 | **8** | `step8_train.py` | The supervised training loop for the GNN brain. |
 | **9** | `step9_inference.py` | Live monitoring and anomaly localization. |
 | **10** | `step10_explainer.py` | Interprets model weights into human-readable root causes. |
+| **11** | `step11_remediation.py` | **(Industrial)** Maps root causes to `kubectl` remediation scripts. |
+| **12** | `step12_notifier.py` | **(Industrial)** Dispatches incident reports to Slack/Teams/Webhooks. |
 
 ---
 
 ## 💻 Tech Stack
 
 - **Frameworks**: PyTorch, PyTorch Geometric, HuggingFace Transformers
-- **Infrastructure**: Istio, Prometheus, Fluent-Bit, Loki
+- **Infrastructure**: Istio, Prometheus, Fluent-Bit, Loki, Kubernetes
 - **Language**: Python 3.9+
 - **Libraries**: NetworkX, Pandas, Scikit-Learn
 
@@ -92,23 +98,12 @@ graph TD
    ```bash
    pip install -r requirements.txt
    ```
-3. Initialize the environment:
-   ```bash
-   kubectl label namespace default istio-injection=enabled
-   ```
 
 ### Running the System
-Start the topology extractor to verify connectivity:
+Start the live inference loop with industrial extensions:
 ```bash
-python scripts/step1_extract_topology.py
+python scripts/step9_inference.py
 ```
-
----
-
-## 🗺️ Roadmap
-- [ ] Integration with Slack/OpsGenie for real-time alerting.
-- [ ] Dynamic Graph re-weighting based on historical incident data.
-- [ ] Support for eBPF-based socket tracing.
 
 ---
 *Created by Antigravity AI for the next generation of SREs.*
