@@ -1,7 +1,7 @@
 import torch
 import json
 import numpy as np
-from model import LogWhispererBrain
+from step6_model import LogWhispererBrain
 
 def run_inference(live_graph_data):
     """

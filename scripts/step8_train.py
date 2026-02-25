@@ -1,6 +1,6 @@
 import torch
-from model import LogWhispererBrain
-from chaos_simulator import simulate_chaos
+from step6_model import LogWhispererBrain
+from step7_chaos_simulator import simulate_chaos
 
 def train_brain():
     # 1. Hyperparameters
