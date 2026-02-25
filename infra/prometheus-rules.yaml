@@ -1,0 +1,22 @@
+# Prometheus Recording Rules for RCA Features
+groups:
+  - name: rca_features
+    rules:
+      # Calculate Error Rate per Service
+      - record: service:error_rate:5m
+        expr: |
+          sum by (source_workload) (
+            rate(istio_requests_total{response_code=~"5.*"}[5m])
+          ) / 
+          sum by (source_workload) (
+            rate(istio_requests_total[5m])
+          )
+
+      # Calculate P99 Latency per Service
+      - record: service:latency_p99:5m
+        expr: |
+          histogram_quantile(0.99, 
+            sum by (le, source_workload) (
+              rate(istio_request_duration_milliseconds_bucket[5m])
+            )
+          )
